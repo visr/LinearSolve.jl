@@ -42,11 +42,15 @@ PrecompileTools.@recompile_invalidations begin
     import Preferences
 end
 
-if Preferences.@load_preference("LoadMKL_JLL", true)
+@static if Preferences.@load_preference("LoadMKL_JLL", true)
+    println("Loading MKL_jll")
     using MKL_jll
     const usemkl = MKL_jll.is_available()
+    @show usemkl
 else
+    println("Not loading MKL_jll")
     const usemkl = false
+    @show usemkl
 end
 
 using Reexport
